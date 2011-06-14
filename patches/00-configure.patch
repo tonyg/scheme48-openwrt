@@ -1,6 +1,6 @@
 diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in ./configure.in
 --- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in	2008-02-07 04:49:14.000000000 -0500
-+++ ./configure.in	2011-06-14 12:02:42.288597246 -0400
++++ ./configure.in	2011-06-14 13:47:42.588597065 -0400
 @@ -395,23 +395,13 @@
  
  	  oldCFLAGS="$CFLAGS"
@@ -38,3 +38,59 @@ diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tony
  	 S48_PTHREAD_TRY_FLAGS([-mthreads])
  	 S48_PTHREAD_TRY_FLAGS([-thread])
   	])
+diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/Makefile.in ./Makefile.in
+--- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/Makefile.in	2008-01-26 10:06:27.000000000 -0500
++++ ./Makefile.in	2011-06-14 14:10:40.704597231 -0400
+@@ -132,6 +132,7 @@
+ IMAGE = scheme48.image
+ INITIAL = $(srcdir)/build/initial.image
+ VM = scheme48vm
++HOST_VM = ./$(VM)
+ POSIX_EXTERNAL = c/posix.so
+ SRFI_27_EXTERNAL = c/srfi-27.so
+ UNIX_OBJS = c/unix/misc.o c/unix/io.o c/unix/fd-io.o c/unix/event.o
+@@ -345,7 +346,7 @@
+ 		scheme/posix/packages.scm scheme/srfi/packages.scm \
+ 		$(usual-files) build/initial.debug build/build-usual-image
+ 	$(srcdir)/build/build-usual-image $(srcdir) \
+-		"`(cd $(srcdir) && pwd)`/scheme" "`pwd`/c" '$(IMAGE)' './$(VM)' \
++		"`(cd $(srcdir) && pwd)`/scheme" "`pwd`/c" '$(IMAGE)' '$(HOST_VM)' \
+ 		'$(INITIAL)-$(BIT_SUFFIX)'
+ 
+ ### Fake targets:  all clean install man dist
+@@ -361,7 +362,7 @@
+ inst-image:
+ 	rm -f '/tmp/$(IMAGE)'
+ 	$(srcdir)/build/build-usual-image $(srcdir) "$(SHARE)" "$(LIB)" \
+-		"/tmp/$(IMAGE)" "./$(VM)" "$(INITIAL)-$(BIT_SUFFIX)"
++		"/tmp/$(IMAGE)" "$(HOST_VM)" "$(INITIAL)-$(BIT_SUFFIX)"
+ 	$(INSTALL_DATA) /tmp/$(IMAGE) $(DESTDIR)$(LIB)
+ 	rm /tmp/$(IMAGE)
+ 
+@@ -491,7 +492,7 @@
+ 		echo ',open test-suites';				\
+ 		echo '(define-test-suite all-tests (compiler-tests big-tests tcp-sockets-tests misc-tests cml-tests srfi-tests posix-tests))'; \
+ 		echo '(run-test-suite all-tests)'			\
+-	) | ./$(VM) -i $(IMAGE) -h 8000000
++	) | $(HOST_VM) -i $(IMAGE) -h 8000000
+ 
+ # --------------------
+ # Rules from here on down are not essential for the basic installation
+@@ -607,7 +608,7 @@
+ #	$(MAKE) $(VM) PACKAGES=
+ 	cd $(srcdir) && \
+ 	$(RUNNABLE) -a batch <build/filenames.scm
+-# or:	./$(VM) -i $(srcdir)/$(INITIAL)-$(BIT_SUFFIX) -a batch <build/filenames.scm
++# or:	$(HOST_VM) -i $(srcdir)/$(INITIAL)-$(BIT_SUFFIX) -a batch <build/filenames.scm
+ 
+ 
+ # --------------------
+@@ -735,7 +736,7 @@
+ 			   (usual-resumer (lambda (args) \
+ 					    (command-processor #f args))) \
+ 			   \"foo\")" \
+-	| ./$(VM) -i scheme/debug/mini.image -a batch
++	| $(HOST_VM) -i scheme/debug/mini.image -a batch
+ 
+ 
+ # --------------------
