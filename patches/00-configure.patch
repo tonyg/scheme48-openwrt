@@ -1,0 +1,40 @@
+diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in ./configure.in
+--- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in	2008-02-07 04:49:14.000000000 -0500
++++ ./configure.in	2011-06-14 12:02:42.288597246 -0400
+@@ -395,23 +395,13 @@
+ 
+ 	  oldCFLAGS="$CFLAGS"
+ 	  CFLAGS="$CFLAGS $1"
+-	  AC_TRY_RUN([#include <pthread.h>
+-int
+-main(void)
+-{
+-  pthread_kill(pthread_self(), 0);
+-}],
++	  AC_TRY_COMPILE([#include <pthread.h>],[pthread_kill(pthread_self(), 0);],
+ 	    [flags_result="$1 (compile)"],
+ 	    [CFLAGS="$oldCFLAGS"])
+ 
+ 	  oldLDFLAGS="$LDFLAGS"
+ 	  LDFLAGS="$LDFLAGS $1"
+-	  AC_TRY_RUN([#include <pthread.h>
+-int
+-main(void)
+-{
+-  pthread_kill(pthread_self(), 0);
+-}],
++	  AC_TRY_COMPILE([#include <pthread.h>],[pthread_kill(pthread_self(), 0);],
+ 		  [flags_result="$flags_result $1 (link)"
+ 		   pthreads_done="yes"],
+ 		  [LDFLAGS="$oldLDFLAGS"])
+@@ -427,9 +417,9 @@
+        AC_CHECK_HEADERS([pthread.h],[dnl
+          pthreads_done="no"
+          AC_MSG_CHECKING([Pthreads support])
+-	 S48_PTHREAD_TRY_FLAGS([-mt])
+ 	 S48_PTHREAD_TRY_FLAGS([-pthread])
+ 	 S48_PTHREAD_TRY_FLAGS([-pthreads])
++	 S48_PTHREAD_TRY_FLAGS([-mt])
+ 	 S48_PTHREAD_TRY_FLAGS([-mthreads])
+ 	 S48_PTHREAD_TRY_FLAGS([-thread])
+  	])
