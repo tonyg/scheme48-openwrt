@@ -13,9 +13,10 @@
 # TODO: these are values for MIPS. We should be a little less, er,
 # hardcoded here eventually.
 #
-# TODO: it seems MIPS is bi-endian, so we will need to figure out
-# somehow how to (a) determine which endianness our linux chooses, and
-# (b) how to communicate this to Scheme48's autoconf.
+# TODO: it seems MIPS is bi-endian, but that our linux uses big-endian
+# IEEE doubles. Need to find out automatically from the kernel
+# (presumably) so that if this changes, we don't go wrong.
 ac_cv_bits_per_byte=8
 ac_cv_sizeof_void_p=4
 ac_cv_header_pthread_h=no
+ieee_endianness="most first"

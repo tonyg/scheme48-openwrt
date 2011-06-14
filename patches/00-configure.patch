@@ -26,8 +26,18 @@ diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tony
  }
 diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in ./configure.in
 --- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in	2008-02-07 04:49:14.000000000 -0500
-+++ ./configure.in	2011-06-14 14:43:18.388600125 -0400
-@@ -395,23 +395,13 @@
++++ ./configure.in	2011-06-14 18:35:02.996597714 -0400
+@@ -316,7 +316,8 @@
+     fprintf(stderr, "WARNING: unknown IEEE format; assuming IEEE with least significant byte first\n");
+     return 0;
+   }
+-}], ieee_endianness="least first", ieee_endianness="most first", ieee_endianness="least first")
++}], ieee_endianness="least first", ieee_endianness="most first",
++    [AC_WARNING([cross-compiling, cannot check IEEE endianness; guessing $ieee_endianness])])
+ AC_MSG_RESULT([$ieee_endianness])
+ if test "$ieee_endianness" = "most first"; then
+   AC_DEFINE([IEEE_MOST_FIRST], 1, [Define if IEEE doubles are stored with most-significant byte first.])
+@@ -395,23 +396,13 @@
  
  	  oldCFLAGS="$CFLAGS"
  	  CFLAGS="$CFLAGS $1"
@@ -53,7 +63,7 @@ diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tony
  		  [flags_result="$flags_result $1 (link)"
  		   pthreads_done="yes"],
  		  [LDFLAGS="$oldLDFLAGS"])
-@@ -427,9 +417,9 @@
+@@ -427,9 +418,9 @@
         AC_CHECK_HEADERS([pthread.h],[dnl
           pthreads_done="no"
           AC_MSG_CHECKING([Pthreads support])
