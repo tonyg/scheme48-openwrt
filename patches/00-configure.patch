@@ -1,3 +1,29 @@
+diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/c/unix/socket.c ./c/unix/socket.c
+--- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/c/unix/socket.c	2008-01-14 02:06:41.000000000 -0500
++++ ./c/unix/socket.c	2011-06-14 18:13:39.128597312 -0400
+@@ -519,11 +519,11 @@
+   RETRY_NULL(host, gethostbyname(machine_name));
+   if (host == NULL)
+     s48_raise_os_error(h_errno);
+-  return s48_enter_byte_vector(host->host_addr, host->host_length);
++  return s48_enter_byte_vector(host->h_addr, host->h_length);
+ }
+ 
+ static s48_value
+-s48_get_host_by_name_result(void)
++s48_get_host_by_name_result(s48_value event_uid)
+ {
+   /* won't be used here */
+ }
+@@ -541,7 +541,7 @@
+ }
+ 
+ static s48_value
+-s48_get_host_by_address_result(void)
++s48_get_host_by_address_result(s48_value event_uid)
+ {
+   /* won't be used here */
+ }
 diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in ./configure.in
 --- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in	2008-02-07 04:49:14.000000000 -0500
 +++ ./configure.in	2011-06-14 14:43:18.388600125 -0400

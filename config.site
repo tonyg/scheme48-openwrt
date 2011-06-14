@@ -4,7 +4,11 @@
 # manual.
 #
 # For Scheme48, we need to provide information about every test
-# involving AC_TRY_RUN.
+# involving AC_TRY_RUN. Some of the tests we can't provide information
+# for; those, we patch.
+#
+# We also cache an answer of "no" for the "is pthreading available?"
+# question.
 #
 # TODO: these are values for MIPS. We should be a little less, er,
 # hardcoded here eventually.
@@ -14,3 +18,4 @@
 # (b) how to communicate this to Scheme48's autoconf.
 ac_cv_bits_per_byte=8
 ac_cv_sizeof_void_p=4
+ac_cv_header_pthread_h=no
