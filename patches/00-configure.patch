@@ -1,6 +1,6 @@
 diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in ./configure.in
 --- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/configure.in	2008-02-07 04:49:14.000000000 -0500
-+++ ./configure.in	2011-06-14 13:47:42.588597065 -0400
++++ ./configure.in	2011-06-14 14:43:18.388600125 -0400
 @@ -395,23 +395,13 @@
  
  	  oldCFLAGS="$CFLAGS"
@@ -40,7 +40,7 @@ diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tony
   	])
 diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/Makefile.in ./Makefile.in
 --- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/Makefile.in	2008-01-26 10:06:27.000000000 -0500
-+++ ./Makefile.in	2011-06-14 14:10:40.704597231 -0400
++++ ./Makefile.in	2011-06-14 14:46:24.784597252 -0400
 @@ -132,6 +132,7 @@
  IMAGE = scheme48.image
  INITIAL = $(srcdir)/build/initial.image
@@ -67,6 +67,15 @@ diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tony
  	$(INSTALL_DATA) /tmp/$(IMAGE) $(DESTDIR)$(LIB)
  	rm /tmp/$(IMAGE)
  
+@@ -409,7 +410,7 @@
+ 	done
+ 
+ inst-config-script:
+-	config_script=$(bindir)/$(CONFIG_SCRIPT) &&			\
++	config_script=$(DESTDIR)$(bindir)/$(CONFIG_SCRIPT) &&		\
+ 	sed -e 's,@incdir\@,$(incdir),g'				\
+ 	    -e 's,@libdir\@,$(libdir),g'				\
+ 	    -e 's,@CC\@,$(CC),g'					\
 @@ -491,7 +492,7 @@
  		echo ',open test-suites';				\
  		echo '(define-test-suite all-tests (compiler-tests big-tests tcp-sockets-tests misc-tests cml-tests srfi-tests posix-tests))'; \

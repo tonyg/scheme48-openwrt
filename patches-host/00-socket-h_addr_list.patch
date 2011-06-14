@@ -1,0 +1,21 @@
+diff -x config.sub -x config.guess -x sysdep.h.in -x configure -ur /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/c/unix/socket.c ./c/unix/socket.c
+--- /var/tmp/tonyg/openwrt/pristine-scheme48-1.8/c/unix/socket.c	2008-01-14 02:06:41.000000000 -0500
++++ ./c/unix/socket.c	2011-06-14 14:37:42.216597252 -0400
+@@ -351,7 +351,7 @@
+       else
+ 	handshake->errno_val = 0;
+       
+-      memcpy(handshake->host_addr, host->h_addr, handshake->host_length);
++      memcpy(handshake->host_addr, host->h_addr_list[0], handshake->host_length);
+     }
+   s48_note_external_event((long) handshake->event_uid);
+ }
+@@ -382,7 +382,7 @@
+       free(handshake);
+       if (host == NULL)
+ 	s48_raise_os_error(h_errno);
+-      return s48_enter_byte_vector(host->h_addr, host->h_length);
++      return s48_enter_byte_vector(host->h_addr_list[0], host->h_length);
+     }
+   else
+     {
